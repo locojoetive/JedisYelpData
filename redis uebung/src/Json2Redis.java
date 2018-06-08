@@ -8,6 +8,8 @@ import redis.clients.jedis.Jedis;
 
 public class Json2Redis {
 
+	
+	//
 	public void loadBusiness(JSONObject jsonObject, Jedis connection) {
 		
 		List<String> categories = new ArrayList<String>();
@@ -30,13 +32,6 @@ public class Json2Redis {
 		for (int n = 0; n<categories.size(); n++) {
 			connection.sadd("business:"+businessId+":categories", categories.get(n).toString());
 		}
-//		if(categories.size()>0) {
-//			int n = 0;
-//			while(n<categories.size()) {
-//				connection.sadd("business:"+businessId+":categories", categories.get(n).toString());
-//				n++;
-//			}
-//		}
 		
 	}
 	
