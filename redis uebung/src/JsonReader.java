@@ -32,18 +32,18 @@ public class JsonReader {
 			
 			Json2Redis j2r = new Json2Redis();
 			
-			String newLine="";
+			String newLine=breader.readLine();
 			int b = 0;
-//			while(newLine != null) {
-			while(b<25) {
-				
-				newLine = breader.readLine();
-				jsonObject = (JSONObject) jsonParser.parse(newLine);
+			while(newLine != null) {
 
+				jsonObject = (JSONObject) jsonParser.parse(newLine);
 				j2r.loadBusiness(jsonObject, jedis);
+				j2r.loadAttributes(jsonObject, jedis);
 				
 //				j2r.loadBusinessHmap(jsonObject, jedis);
-			
+				
+				newLine = breader.readLine();
+				
 				b++;
 				
 			}

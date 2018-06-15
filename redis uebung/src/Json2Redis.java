@@ -48,8 +48,6 @@ public class Json2Redis {
 			connection.sadd("business:"+businessId+":hours:"+dayList[n], hm.get(dayList[n]).toString());
 		}
 		
-		JSONObject attributes = (JSONObject) jsonObject.get("attributes");
-		this.loadAttributes(attributes, connection, businessId);
 		
 //	adds longitude and latitude as geoadd
 //		jedis.geoadd("coorarg0dinates", (double) jsonObject.get("longitude"), (double) jsonObject.get("latitude"), businessId);
@@ -100,8 +98,9 @@ public class Json2Redis {
 		return hm;
 	}
 	
-	public void loadAttributes(JSONObject attributes, Jedis connection, String businessId) {
-		
+	public void loadAttributes(JSONObject jsonObject, Jedis connection) {
+		String businessId = (String) jsonObject.get("business_id");
+		JSONObject attributes = (JSONObject) jsonObject.get("attributes");
 		Iterator<Map.Entry> itr1 = attributes.entrySet().iterator();
 		   while (itr1.hasNext()) {
 		       Map.Entry pair = itr1.next();
