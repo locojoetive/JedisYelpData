@@ -1,12 +1,9 @@
-import static org.junit.Assume.assumeNoException;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import redis.clients.jedis.Jedis;
@@ -48,10 +45,7 @@ public class Json2Redis {
 			connection.sadd("business:"+businessId+":hours:"+dayList[n], hm.get(dayList[n]).toString());
 		}
 		
-		
-//	adds longitude and latitude as geoadd
-//		jedis.geoadd("coorarg0dinates", (double) jsonObject.get("longitude"), (double) jsonObject.get("latitude"), businessId);
-
+	
 	}
 
 
@@ -122,7 +116,6 @@ public class Json2Redis {
 		        }
 		       else {
 		        connection.hset("business:" + businessId + ":attributes", f, t);
-		        //System.out.println(pair.getKey() + " : " + pair.getValue());
 		       }
 		            
 		   }

@@ -2,9 +2,8 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.*;
 
-import org.json.simple.JSONArray;
+
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -33,19 +32,15 @@ public class JsonReader {
 			Json2Redis j2r = new Json2Redis();
 			
 			String newLine=breader.readLine();
-			int b = 0;
+			
 			while(newLine != null) {
 
 				jsonObject = (JSONObject) jsonParser.parse(newLine);
 				j2r.loadBusiness(jsonObject, jedis);
 				j2r.loadAttributes(jsonObject, jedis);
+
 				
-//				j2r.loadBusinessHmap(jsonObject, jedis);
-				
-				newLine = breader.readLine();
-				
-				b++;
-				
+				newLine = breader.readLine();	
 			}
 
 
