@@ -1,6 +1,10 @@
+import static org.junit.Assume.assumeNoException;
+
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -44,9 +48,11 @@ public class Json2Redis {
 			connection.sadd("business:"+businessId+":hours:"+dayList[n], hm.get(dayList[n]).toString());
 		}
 		
+		JSONObject attributes = (JSONObject) jsonObject.get("attributes");
+		this.loadAttributes(attributes, connection, businessId);
 		
 //	adds longitude and latitude as geoadd
-//		jedis.geoadd("coordinates", (double) jsonObject.get("longitude"), (double) jsonObject.get("latitude"), businessId);
+//		jedis.geoadd("coorarg0dinates", (double) jsonObject.get("longitude"), (double) jsonObject.get("latitude"), businessId);
 
 	}
 
@@ -94,4 +100,33 @@ public class Json2Redis {
 		return hm;
 	}
 	
+	public void loadAttributes(JSONObject attributes, Jedis connection, String businessId) {
+		
+		Iterator<Map.Entry> itr1 = attributes.entrySet().iterator();
+		   while (itr1.hasNext()) {
+		       Map.Entry pair = itr1.next();
+		       String t  = (String) pair.getValue().toString();
+		        String f  = (String) pair.getKey().toString();
+		             
+		       if(pair.getValue() instanceof JSONObject){
+		         
+		         JSONObject use3 = (JSONObject) pair.getValue();
+		         Iterator<Map.Entry> itr2 = use3.entrySet().iterator();
+		         while (itr2.hasNext()) {
+		             Map.Entry pair2 = itr2.next();
+		             String t2  = (String) pair2.getValue().toString();
+		             String f2  = (String) pair2.getKey().toString();         
+		             
+		             connection.hset("business:" + businessId + ":attributes:" + f, f2, t2);   
+		             connection.hset("business:" + businessId + ":attributes", f, t);
+		         }
+		        }
+		       else {
+		        connection.hset("business:" + businessId + ":attributes", f, t);
+		        //System.out.println(pair.getKey() + " : " + pair.getValue());
+		       }
+		            
+		   }
+	
+	}
 }

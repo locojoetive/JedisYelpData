@@ -35,7 +35,7 @@ public class JsonReader {
 			String newLine="";
 			int b = 0;
 //			while(newLine != null) {
-			while(b<5) {
+			while(b<25) {
 				
 				newLine = breader.readLine();
 				jsonObject = (JSONObject) jsonParser.parse(newLine);
